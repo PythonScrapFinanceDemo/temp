@@ -41,6 +41,15 @@ def get_date_list(begin_date,end_date):
         print("按理说根据需求不会出现这种情况，如果出现，程序的健壮性需要改善。")
     return date_list
 
+def tick_weekend(date_list):
+    date_without_weekend = []
+    for date in date_list:
+        date_temp = date.split("-")
+        weekday = calendar.weekday(int(date_temp[0]),int(date_temp[1]),int(date_temp[2]))
+        if weekday != 0 and weekday != 6:
+            date_without_weekend.append(date)
+    return date_without_weekend
+
 if __name__ == "__main__":
     #仅供测试
     # begin_date = str(input("begin_date:  "))  #python3
@@ -48,4 +57,5 @@ if __name__ == "__main__":
     begin_date = raw_input("begin_date:  ")
     end_date = raw_input("begin_date:  ")
     date_list = get_date_list(begin_date,end_date)
+    date_list = tick_weekend(date_list)
     print(date_list)
