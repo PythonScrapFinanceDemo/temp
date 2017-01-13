@@ -13,7 +13,8 @@ def get_plain_text(ResultSet):
     return text
 
 #读取数据，提取并清洗数据，最后装入user_information中
-def select_data(user_information,driver):
+def select_data(driver):
+    user_information = []
     bsObj = BeautifulSoup(driver.page_source,'html.parser')
     try:
         user_information_obj = bsObj.findAll('tr',style="background: #fff;")
@@ -38,4 +39,3 @@ def select_data(user_information,driver):
 
         df = pd.DataFrame(user_information,columns = columns_text) #使用pandas储存数据
         df.to_csv(group_name[group_i]+'-'+date+'-'page_now+'.csv',index=False) #每采集完一日的一组后，存储一次
-        return user_information
