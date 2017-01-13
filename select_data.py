@@ -32,7 +32,7 @@ def select_data(driver):
             user_information.append(temp)
 
         columns = bsObj.findAll(style="padding-top: 1px;")
-        columns_text = scrap.get_plain_text(columns)
+        columns_text = get_plain_text(columns)
         columns_text.insert(0,'排名')
 
         page_now = int(bsObj.find('select',id="AspNetPager1_input").find('option',selected="true").get_text())
