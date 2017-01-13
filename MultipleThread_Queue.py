@@ -6,6 +6,7 @@ import time
 import date as date_list
 import pagenumber as GetTotalPageNumber
 import postpacketpayload as GetPostPacket
+import write as WriteInCSV
 
 class myThread (threading.Thread):
     def __init__(self, threadID, name, q):
@@ -28,8 +29,10 @@ def process_data(threadName, q):
             payload = GetPostPacket.getQingLiangZuPayload(data,Date)     #要加上一个参数用来判断哪一组
             headers = GetPostPacket.getQingLiangZuHeaders()
             response = requests.request("POST", url, data=payload, headers=headers)
-            print response.text
-            print "输出"+Date +"的"+ str(data) + "页的结果\n"
+            page_source = response.text
+            result_successfully = WriteInCSV.select_data(page_source)
+            print "存储"+Date +"的"+ str(data) + "页中的数据\n"
+            print result_successfully
         else:
             queueLock.release()
         time.sleep(0)
@@ -38,7 +41,6 @@ def process_data(threadName, q):
 if __name__ == "__main__":
     total_start =time.clock()
     Datelist = date_list.get_date_list('2016-04-01','2016-05-01')
-
 
     for Date in Datelist:
         start =time.clock()
