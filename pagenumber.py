@@ -16,7 +16,8 @@ def getOneDayFirstPage(Date,GroupType,WantedPage):
 
 #给一个日期，返回该日期对应的所有页面数量
 def getOneDayTotalPageNumber(Date,GroupType):
-    source_code = getOneDayFirstPage(Date,GroupType,WantedPage =1)
+    WantedPage =1
+    source_code = getOneDayFirstPage(Date,GroupType,WantedPage)
     plain_text=str(source_code)
     print plain_text
     bsObj = BeautifulSoup(plain_text,'html.parser')
@@ -29,10 +30,7 @@ def getOneDayTotalPageNumber(Date,GroupType):
 
 if __name__ == "__main__":
     Date = "2016-04-20"
-    # GroupType = "QingLiangZu"
-    #GroupType = "ZhongLiangZu"
-    # GroupType = "ChengXuHuaZu"
-    # GroupType = "JiJinZu"
-    GroupType = "JinRongQiHou"
-    totalPageNumber = getOneDayTotalPageNumber(Date,GroupType)
+    GroupList = ['QingLiangZu','ZhongLiangZu','JiJinZu','ChengXuHuaZu','JinRongQiHou','YouSeJinShu','GuiJinShu','NongChanPin','NengYuanHuaGong','JingLiRun']
+
+    totalPageNumber = getOneDayTotalPageNumber(Date,GroupList[9])
     print totalPageNumber
