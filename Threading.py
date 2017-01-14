@@ -9,15 +9,16 @@ import postpacketpayload as GetPostPacket
 import write as WriteInCSV
 
 class myThread (threading.Thread):
-    def __init__(self, threadID, name):
+    def __init__(self, threadID, name,Date):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
+        self.Date = Date
     def run(self):
         print "Starting " + self.name + "\n"
-        process_data(self.name)
+        process_data(self.name,self.Date)
         print "Exiting " + self.name + "\n"
-def process_data(threadName):
+def process_data(threadName,Date):
         data = str(threadName.split('-')[1])
         print "%s processing %s的%s页\n" % (threadName,Date, data)
         url = "http://spds.qhrb.com.cn/SP10/SPOverSee1.aspx"
@@ -26,7 +27,7 @@ def process_data(threadName):
         headers = GetPostPacket.getQingLiangZuHeaders()
         response = requests.request("POST", url, data=payload, headers=headers)
         page_source = response.text
-        result_successfully = WriteInCSV.select_data(page_source)
+        result_successfully = WriteInCSV.select_data(page_source,Date)
         print "存储"+Date +"的"+ str(data) + "页中的数据\n"
         print result_successfully
 
@@ -34,6 +35,7 @@ def process_data(threadName):
 
 
 if __name__ == "__main__":
+    #用来测试
     total_start =time.clock()
     Datelist = date_list.get_date_list('2016-04-01','2016-05-01')
     for Date in Datelist:
@@ -43,7 +45,7 @@ if __name__ == "__main__":
         threadID = 1
         # 创建新线程
         for tName in threadList:
-            thread = myThread(threadID, tName)
+            thread = myThread(threadID, tName,Date)
             #启动线程
             thread.start()
             threadID += 1

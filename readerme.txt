@@ -1,0 +1,3 @@
+MultipleThread_try是针对多个日期多个页面
+experiment是针对同一日期多个页面
+post是针对单个日期单个页面
