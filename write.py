@@ -12,7 +12,7 @@ def get_plain_text(ResultSet):
     return text
 
 #读取数据，提取并清洗数据，最后装入user_information中
-def select_data(page_source,Date):
+def select_data(page_source,Date,GroupType):
     user_information = []
     bsObj = BeautifulSoup(page_source,'html.parser')
     try:
@@ -38,7 +38,7 @@ def select_data(page_source,Date):
 
         df = pd.DataFrame(user_information,columns = columns_text) #使用pandas储存数据
         # df.to_csv(group_name[group_i]+'-'+date+'-'page_now+'.csv',index=False) #每采集完一日的一组后，存储一次
-        df.to_csv('file/'+Date+'-'+str(page_now)+'.csv',index=False) #每采集完一日的一组后，存储一次
+        df.to_csv('file/'+GroupType+'-'+Date+'-'+str(page_now)+'.csv',index=False) #每采集完一日的一组后，存储一次
     return "存储成功"
 
 if __name__ == "__main__":
@@ -62,6 +62,8 @@ if __name__ == "__main__":
      }
     response = requests.request("POST", url, data=payload, headers=headers)
     page_source = response.text
-    result = select_data(page_source)
+    Date = '2016-05-15'
+    GroupType = "QingLiangZu"
+    result = select_data(page_source,Date,GroupType)
     print page_source
     print result
