@@ -47,7 +47,7 @@ def all_to_one(nameList):
         if df_i == 0:
             total_df = temp_df
         else:
-            total_df.append(temp_df,ignore_index=True)
+            total_df = total_df.append(temp_df,ignore_index=True)
     total_df.to_csv('total_temp.csv')
     return total_df
 
@@ -93,19 +93,6 @@ def get_id():
     pass
 
 if __name__ == '__main__':
-    '''
-    #rebuild_csv('JiJinZu')
-    #rebuild_csv('ChengXuHuaZu')
-    #rebuild_csv('QingLiangZu')
-    rebuild_csv('ZhongLiangZu')
-    rebuild_csv('GuiJinShu',1)
-    #rebuild_csv('NongChanPin',1)
-    rebuild_csv('NengYuanHuaGong',1)
-    rebuild_csv('YouSeJinShu',1)
-    rebuild_csv('JinRongQiHou',1)
-    #rebuild_csv('JingLiRun',1)
-    all_to_one(['JiJinZu','ChengXuHuaZu','QingLiangZu','ZhongLiangZu','GuiJinShu','NongChanPin','NengYuanHuaGong','YouSeJinShu','JinRongQiHou','JingLiRun'])
-    '''
     deal_csv('JiJinZu')
     deal_csv('ChengXuHuaZu')
     deal_csv('QingLiangZu')
