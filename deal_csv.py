@@ -89,6 +89,16 @@ def deal_csv(folderName,label=0):
         print(file_i)
     filetowrite.close()
 
+def chenge_columns_order(filename,columns_list):
+    temp_df = pd.read_csv(filename, low_memory=False)
+    temp_df = temp_df[columns_list]
+    temp_df.to_csv(filename+'_new.csv')
+
+def sort_df(filename):
+    temp_df = pd.read_csv(filename, low_memory=False)
+    temp_df.sort(['排名'], ascending=[True])
+
+
 def get_id():
     pass
 
