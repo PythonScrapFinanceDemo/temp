@@ -51,7 +51,7 @@ def all_to_one(nameList):
     total_df.to_csv('total_temp.csv')
     return total_df
 
-def deal_csv(folderName,label):
+def deal_csv(folderName,label=0):
     filetowrite=open(folderName+'.csv','a')
     writer=csv.writer(filetowrite)
 
