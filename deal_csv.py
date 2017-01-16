@@ -51,19 +51,69 @@ def all_to_one(nameList):
     total_df.to_csv('total_temp.csv')
     return total_df
 
+def deal_csv(folderName,label):
+    filetowrite=open(folderName+'.csv','a')
+    writer=csv.writer(filetowrite)
+
+    files = []  #存储所有的csv文件名
+    for (dirpath, dirnames, filenames) in os.walk(folderName):
+        files.extend(filenames)
+        break
+
+    for file_i in range(len(files)):
+        filename = files[file_i]
+        temp_df = pd.read_csv(os.path.join(folderName,filename),encoding="gb18030")
+        temp_df['时间'] = Series(get_date(filename),index=temp_df.index)
+        temp_df['排行榜'] = Series(folderName,index=temp_df.index)
+        if '组别' not in temp_df.columns:
+            temp_df['组别'] = Series('-',index=temp_df.index)
+        if label == 1:
+            temp_df['净利润得分'] = Series('-',index=temp_df.index)
+            temp_df['回撤率得分'] = Series('-',index=temp_df.index)
+            temp_df['净值得分'] = Series('-',index=temp_df.index)
+            temp_df['综合得分'] = Series('-',index=temp_df.index)
+        temp_df['客户代码'] = Series('-',index=temp_df.index) #先设置为‘-’，以后再判断
+        cols = temp_df.columns.tolist()
+        cols.sort()
+        temp_df = temp_df[cols]
+        temp_df.to_csv('temp_df.csv')
+        filetoread=open('temp_df.csv','r')
+        reader=csv.reader(filetoread)
+        if file_i != 0:
+            for i,line in enumerate(reader):
+                if i != 0:
+                    writer.writerow(line)
+        else:
+            for line in reader:
+                writer.writerow(line)
+        print(file_i)
+    filetowrite.close()
+
 def get_id():
     pass
 
 if __name__ == '__main__':
-    #rebuild_csv('ChengXuHuaZu_1')
+    '''
     #rebuild_csv('JiJinZu')
-    rebuild_csv('ChengXuHuaZu')
-    rebuild_csv('QingLiangZu')
+    #rebuild_csv('ChengXuHuaZu')
+    #rebuild_csv('QingLiangZu')
     rebuild_csv('ZhongLiangZu')
     rebuild_csv('GuiJinShu',1)
     #rebuild_csv('NongChanPin',1)
     rebuild_csv('NengYuanHuaGong',1)
     rebuild_csv('YouSeJinShu',1)
     rebuild_csv('JinRongQiHou',1)
-    rebuild_csv('JingLiRun',1)
+    #rebuild_csv('JingLiRun',1)
+    all_to_one(['JiJinZu','ChengXuHuaZu','QingLiangZu','ZhongLiangZu','GuiJinShu','NongChanPin','NengYuanHuaGong','YouSeJinShu','JinRongQiHou','JingLiRun'])
+    '''
+    deal_csv('JiJinZu')
+    deal_csv('ChengXuHuaZu')
+    deal_csv('QingLiangZu')
+    deal_csv('ZhongLiangZu')
+    deal_csv('GuiJinShu',1)
+    deal_csv('NongChanPin',1)
+    deal_csv('NengYuanHuaGong',1)
+    deal_csv('YouSeJinShu',1)
+    deal_csv('JinRongQiHou',1)
+    deal_csv('JingLiRun',1)
     all_to_one(['JiJinZu','ChengXuHuaZu','QingLiangZu','ZhongLiangZu','GuiJinShu','NongChanPin','NengYuanHuaGong','YouSeJinShu','JinRongQiHou','JingLiRun'])
