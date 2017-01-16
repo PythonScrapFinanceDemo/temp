@@ -56,6 +56,14 @@ def get_id():
 
 if __name__ == '__main__':
     #rebuild_csv('ChengXuHuaZu_1')
-    rebuild_csv('JiJinZu')
-    rebuild_csv('NongChanPin',1)
-    all_to_one(['JiJinZu','NongChanPin'])
+    #rebuild_csv('JiJinZu')
+    rebuild_csv('ChengXuHuaZu')
+    rebuild_csv('QingLiangZu')
+    rebuild_csv('ZhongLiangZu')
+    rebuild_csv('GuiJinShu',1)
+    #rebuild_csv('NongChanPin',1)
+    rebuild_csv('NengYuanHuaGong',1)
+    rebuild_csv('YouSeJinShu',1)
+    rebuild_csv('JinRongQiHou',1)
+    rebuild_csv('JingLiRun',1)
+    all_to_one(['JiJinZu','ChengXuHuaZu','QingLiangZu','ZhongLiangZu','GuiJinShu','NongChanPin','NengYuanHuaGong','YouSeJinShu','JinRongQiHou','JingLiRun'])
