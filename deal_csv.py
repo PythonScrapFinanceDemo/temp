@@ -116,10 +116,10 @@ if __name__ == '__main__':
     deal_csv('JinRongQiHou',1)
     deal_csv('JingLiRun',1)
     all_to_one(['JiJinZu','ChengXuHuaZu','QingLiangZu','ZhongLiangZu','GuiJinShu','NongChanPin','NengYuanHuaGong','YouSeJinShu','JinRongQiHou','JingLiRun'])
-
+    '''
     columns_list = ['客户昵称','组别','排行榜','时间','排名','当日权益','风险度(%)','净利润','净利润得分','回撤率(%)','回撤率得分','日净值','累计净值',
                     '净值得分','综合得分','参考收益率(%)','指定交易商','操作指导','账户评估']
 
     chenge_columns_order(columns_list)
-    '''
+
     sort_df()
