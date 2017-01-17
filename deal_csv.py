@@ -109,7 +109,7 @@ def get_id():
     names = make_unique(temp_df['客户昵称'].tolist())
     temp_df['ID'] = Series('-',index=temp_df.index)
     order = 0
-    for i in range(len(names)):
+    for i in range(len(names) - 1):
         print(i)
         nums  = len(temp_df[temp_df['客户昵称']==names[i]])
         temp_df['ID'].loc[order:order+nums] = i
@@ -117,18 +117,17 @@ def get_id():
     temp_df.to_csv('total_temp_new_id.csv')
 
 if __name__ == '__main__':
-    '''
-    deal_csv('JiJinZu')
-    deal_csv('ChengXuHuaZu')
-    deal_csv('QingLiangZu')
-    deal_csv('ZhongLiangZu')
-    deal_csv('GuiJinShu',1)
-    deal_csv('NongChanPin',1)
-    deal_csv('NengYuanHuaGong',1)
-    deal_csv('YouSeJinShu',1)
-    deal_csv('JinRongQiHou',1)
-    deal_csv('JingLiRun',1)
-    all_to_one(['JiJinZu','ChengXuHuaZu','QingLiangZu','ZhongLiangZu','GuiJinShu','NongChanPin','NengYuanHuaGong','YouSeJinShu','JinRongQiHou','JingLiRun'])
+    deal_csv('基金组')
+    deal_csv('程序化组')
+    deal_csv('轻量组')
+    deal_csv('重量组')
+    deal_csv('贵金属',1)
+    deal_csv('农产品',1)
+    deal_csv('能源化工',1)
+    deal_csv('有色金属',1)
+    deal_csv('金融期货',1)
+    deal_csv('净利润',1)
+    all_to_one(['基金组','程序化组','轻量组','重量组','贵金属','农产品','能源化工','有色金属','金融期货','净利润'])
 
     columns_list = ['客户昵称','组别','排行榜','时间','排名','当日权益','风险度(%)','净利润','净利润得分','回撤率(%)','回撤率得分','日净值','累计净值',
                     '净值得分','综合得分','参考收益率(%)','指定交易商','操作指导','账户评估']
@@ -136,5 +135,4 @@ if __name__ == '__main__':
     chenge_columns_order(columns_list)
 
     sort_df()
-    '''
     get_id()
