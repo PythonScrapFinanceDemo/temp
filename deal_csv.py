@@ -89,20 +89,22 @@ def deal_csv(folderName,label=0):
         print(file_i)
     filetowrite.close()
 
-def chenge_columns_order(filename,columns_list):
-    temp_df = pd.read_csv(filename, low_memory=False)
+def chenge_columns_order(columns_list):
+    temp_df = pd.read_csv('total_temp.csv', low_memory=False)
     temp_df = temp_df[columns_list]
-    temp_df.to_csv(filename+'_new.csv')
+    temp_df.to_csv('total_temp_nc.csv')
 
-def sort_df(filename):
-    temp_df = pd.read_csv(filename, low_memory=False)
-    temp_df.sort(['排名'], ascending=[True])
+def sort_df():
+    temp_df = pd.read_csv('total_temp_nc.csv', low_memory=False)
+    temp_df = temp_df.sort_values(['客户昵称','排名'], ascending=[True,True])
+    temp_df.to_csv('total_temp_new.csv')
 
 
 def get_id():
     pass
 
 if __name__ == '__main__':
+    '''
     deal_csv('JiJinZu')
     deal_csv('ChengXuHuaZu')
     deal_csv('QingLiangZu')
@@ -114,3 +116,10 @@ if __name__ == '__main__':
     deal_csv('JinRongQiHou',1)
     deal_csv('JingLiRun',1)
     all_to_one(['JiJinZu','ChengXuHuaZu','QingLiangZu','ZhongLiangZu','GuiJinShu','NongChanPin','NengYuanHuaGong','YouSeJinShu','JinRongQiHou','JingLiRun'])
+
+    columns_list = ['客户昵称','组别','排行榜','时间','排名','当日权益','风险度(%)','净利润','净利润得分','回撤率(%)','回撤率得分','日净值','累计净值',
+                    '净值得分','综合得分','参考收益率(%)','指定交易商','操作指导','账户评估']
+
+    chenge_columns_order(columns_list)
+    '''
+    sort_df()
