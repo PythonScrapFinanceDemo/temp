@@ -39,7 +39,7 @@ def rebuild_csv(folderName,label=0):
     df = df[cols]
     df.to_csv(folderName+'.csv',index=False)
 
-def all_to_one(nameList):
+def all_to_one(nameList,columns_list):
     for df_i in range(len(nameList)):
         df_name = nameList[df_i]+'.csv'
         temp_df = pd.read_csv(df_name, low_memory=False)
@@ -47,7 +47,18 @@ def all_to_one(nameList):
             total_df = temp_df
         else:
             total_df = total_df.append(temp_df,ignore_index=True)
-    total_df.to_csv('total_temp.csv')
+    temp_df = total_df
+    temp_df = temp_df[columns_list]
+    temp_df = temp_df.sort_values(['客户昵称','排名'], ascending=[True,True])
+    names = make_unique(temp_df['客户昵称'].tolist())
+    temp_df['ID'] = Series('-',index=temp_df.index)
+    order = 0
+    for i in range(len(names) - 1):
+        print(i)
+        nums  = len(temp_df[temp_df['客户昵称']==names[i]])
+        temp_df['ID'].loc[order:order+nums] = i
+        order = order + nums
+    temp_df.to_csv('total_temp_new_id.csv')
     return total_df
 
 def deal_csv(folderName,label=0):
@@ -91,12 +102,17 @@ def deal_csv(folderName,label=0):
 def chenge_columns_order(columns_list):
     temp_df = pd.read_csv('total_temp.csv', low_memory=False)
     temp_df = temp_df[columns_list]
-    temp_df.to_csv('total_temp_nc.csv')
-
-def sort_df():
     temp_df = pd.read_csv('total_temp_nc.csv', low_memory=False)
     temp_df = temp_df.sort_values(['客户昵称','排名'], ascending=[True,True])
-    temp_df.to_csv('total_temp_new.csv')
+    names = make_unique(temp_df['客户昵称'].tolist())
+    temp_df['ID'] = Series('-',index=temp_df.index)
+    order = 0
+    for i in range(len(names) - 1):
+        print(i)
+        nums  = len(temp_df[temp_df['客户昵称']==names[i]])
+        temp_df['ID'].loc[order:order+nums] = i
+        order = order + nums
+    temp_df.to_csv('total_temp_new_id.csv')
 
 
 def make_unique(original_list):
@@ -127,12 +143,13 @@ if __name__ == '__main__':
     deal_csv('有色金属',1)
     deal_csv('金融期货',1)
     deal_csv('净利润',1)
-    all_to_one(['基金组','程序化组','轻量组','重量组','贵金属','农产品','能源化工','有色金属','金融期货','净利润'])
+
 
     columns_list = ['客户昵称','组别','排行榜','时间','排名','当日权益','风险度(%)','净利润','净利润得分','回撤率(%)','回撤率得分','日净值','累计净值',
                     '净值得分','综合得分','参考收益率(%)','指定交易商','操作指导','账户评估']
-
-    chenge_columns_order(columns_list)
-
+    all_to_one(['基金组','程序化组','轻量组','重量组','贵金属','农产品','能源化工','有色金属','金融期货','净利润'],columns_list)
+    #chenge_columns_order(columns_list)
+    '''
     sort_df()
     get_id()
+    '''
